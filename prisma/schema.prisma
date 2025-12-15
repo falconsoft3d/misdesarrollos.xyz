@@ -18,6 +18,7 @@ model Project {
   description String
   imageUrl    String
   projectUrl  String
+  githubUrl   String?   // URL del repositorio de GitHub
   videoUrl    String?   // URL del video de introducción
   gallery     String?   // JSON array de URLs de imágenes
   tags        String    // JSON array as string

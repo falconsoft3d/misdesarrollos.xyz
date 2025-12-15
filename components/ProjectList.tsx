@@ -57,13 +57,13 @@ export default function ProjectList({ initialProjects }: ProjectListProps) {
             <div className="flex items-center gap-4 mb-6">
               <div className="relative w-20 h-20 rounded-lg overflow-hidden border-4 border-yellow-500 shadow-lg">
                 <img 
-                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&h=200&fit=crop"
+                  src="/yo.png"
                   alt="Desarrollador"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900">Marlon Falcon</h3>
+                <h3 className="text-xl font-bold text-gray-900">Marlon Falcón Hernández</h3>
                 <p className="text-gray-600">Desarrollador Full Stack</p>
               </div>
             </div>

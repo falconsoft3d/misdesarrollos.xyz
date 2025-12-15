@@ -112,7 +112,7 @@ MIT
 
 ## 👤 Autor
 
-Marlon Falcon
+Marlon Falcón Hernández
 
 
 ## Getting Started

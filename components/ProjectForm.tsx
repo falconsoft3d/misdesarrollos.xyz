@@ -10,6 +10,7 @@ interface ProjectFormProps {
     description: string
     imageUrl: string
     projectUrl: string
+    githubUrl?: string | null
     videoUrl?: string | null
     gallery?: string | null
     tags: string
@@ -45,6 +46,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
     description: project?.description || '',
     imageUrl: project?.imageUrl || '',
     projectUrl: project?.projectUrl || '',
+    githubUrl: project?.githubUrl || '',
     videoUrl: project?.videoUrl || '',
     gallery: project?.gallery ? JSON.parse(project.gallery).join(', ') : '',
     tags: project?.tags ? JSON.parse(project.tags).join(', ') : ''
@@ -71,6 +73,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
           description: formData.description,
           imageUrl: formData.imageUrl,
           projectUrl: formData.projectUrl,
+          githubUrl: formData.githubUrl || null,
           videoUrl: formData.videoUrl || null,
           gallery,
           tags
@@ -159,6 +162,20 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
           required
           value={formData.projectUrl}
           onChange={(e) => setFormData({ ...formData, projectUrl: e.target.value })}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-gray-900"
+          placeholder="https://miproyecto.com"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="githubUrl" className="block text-sm font-medium text-gray-700 mb-2">
+          URL de GitHub (opcional)
+        </label>
+        <input
+          type="url"
+          id="githubUrl"
+          value={formData.githubUrl}
+          onChange={(e) => setFormData({ ...formData, githubUrl: e.target.value })}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-gray-900"
           placeholder="https://github.com/usuario/proyecto"
         />
