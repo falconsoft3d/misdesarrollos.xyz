@@ -63,7 +63,7 @@ export default function ProjectList({ initialProjects }: ProjectListProps) {
                 />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900">Marlon Falcón Hdez</h3>
+                <h3 className="text-xl font-bold text-gray-900">Marlon Falcón Hernández</h3>
                 <p className="text-gray-600">Desarrollador Full Stack</p>
               </div>
             </div>
