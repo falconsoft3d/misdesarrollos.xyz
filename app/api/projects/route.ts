@@ -29,7 +29,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { title, description, imageUrl, projectUrl, videoUrl, gallery, tags } = body
+    const { title, description, imageUrl, projectUrl, githubUrl, videoUrl, gallery, tags } = body
     
     const { slugify } = await import('@/lib/slugify')
     const slug = slugify(title)
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
         description,
         imageUrl,
         projectUrl,
+        githubUrl: githubUrl || null,
         videoUrl: videoUrl || null,
         gallery: gallery && gallery.length > 0 ? JSON.stringify(gallery) : null,
         tags: JSON.stringify(tags || [])

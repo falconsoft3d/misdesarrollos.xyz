@@ -5,6 +5,7 @@ export interface Project {
   description: string
   imageUrl: string
   projectUrl: string
+  githubUrl?: string | null
   videoUrl?: string | null
   gallery?: string | null
   tags: string

@@ -41,6 +41,7 @@ function convertToEmbedUrl(url: string): string {
 export default function ProjectForm({ project, isEditing = false }: ProjectFormProps) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
   const [formData, setFormData] = useState({
     title: project?.title || '',
     description: project?.description || '',
@@ -51,6 +52,35 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
     gallery: project?.gallery ? JSON.parse(project.gallery).join(', ') : '',
     tags: project?.tags ? JSON.parse(project.tags).join(', ') : ''
   })
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setIsUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setFormData(prev => ({ ...prev, imageUrl: data.url }))
+      } else {
+        const error = await response.json()
+        alert(error.error || 'Error al subir la imagen')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Error al subir la imagen')
+    } finally {
+      setIsUploading(false)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -127,19 +157,38 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
       </div>
 
       <div>
-        <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-2">
-          URL de la Imagen (opcional)
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Imagen del Proyecto (opcional)
         </label>
-        <input
-          type="url"
-          id="imageUrl"
-          value={formData.imageUrl}
-          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-gray-900"
-          placeholder="https://example.com/image.jpg"
-        />
+        
+        {/* Opción de subir archivo */}
+        <div className="mb-3">
+          <label 
+            htmlFor="imageFile" 
+            className="flex items-center justify-center w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-yellow-400 transition-colors bg-gray-50 hover:bg-yellow-50"
+          >
+            <div className="text-center">
+              <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <p className="mt-1 text-sm text-gray-600">
+                {isUploading ? 'Subiendo...' : 'Haz clic para subir imagen'}
+              </p>
+              <p className="text-xs text-gray-500">PNG, JPG, GIF hasta 5MB</p>
+            </div>
+            <input
+              id="imageFile"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              disabled={isUploading}
+              className="hidden"
+            />
+          </label>
+        </div>
+        
         {formData.imageUrl && (
-          <div className="mt-2">
+          <div className="mt-2 relative">
             <img 
               src={formData.imageUrl} 
               alt="Preview" 
@@ -148,6 +197,16 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                 e.currentTarget.style.display = 'none'
               }}
             />
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, imageUrl: '' })}
+              className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
+              title="Eliminar imagen"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         )}
       </div>
