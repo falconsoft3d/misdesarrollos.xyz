@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import DeleteButton from '@/components/DeleteButton'
 import Header from '@/components/Header'
+import type { Project } from '@/types'
 
 export const revalidate = 0
 
@@ -14,7 +15,7 @@ export default async function AdminPage() {
     orderBy: {
       createdAt: 'desc'
     }
-  })
+  }) as unknown as Project[]
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -132,7 +133,7 @@ export default async function AdminPage() {
                         </td>
                         <td className="px-6 py-4">
                           <span className="text-gray-600">
-                            {project.comments.length}
+                            {project.comments?.length || 0}
                           </span>
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-500">
