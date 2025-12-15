@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 interface Task {
   id?: string
   title: string
-  description: string
+  description: string | null
   status: string
   order: number
 }

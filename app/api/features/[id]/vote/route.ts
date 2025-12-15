@@ -11,11 +11,4 @@ export async function POST(
     { status: 403 }
   )
 }
-  } catch (error) {
-    console.error('Error creating vote:', error)
-    return NextResponse.json(
-      { error: 'Error al votar' },
-      { status: 500 }
-    )
-  }
-}
+

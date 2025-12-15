@@ -7,10 +7,14 @@ import FilterBar from '@/components/FilterBar'
 
 interface Project {
   id: string
-  name: string
+  title: string
+  slug: string
   description: string
+  imageUrl: string
   projectUrl: string
+  tags: string
   createdAt: Date
+  updatedAt: Date
   views: number
   comments: any[]
 }
@@ -35,7 +39,7 @@ export default function ProjectList({ initialProjects }: ProjectListProps) {
 
     const lowercaseQuery = query.toLowerCase()
     const filtered = initialProjects.filter(project => 
-      project.name.toLowerCase().includes(lowercaseQuery) ||
+      project.title.toLowerCase().includes(lowercaseQuery) ||
       project.description.toLowerCase().includes(lowercaseQuery)
     )
     

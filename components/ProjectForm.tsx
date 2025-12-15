@@ -55,8 +55,8 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
     setIsSubmitting(true)
 
     try {
-      const tags = formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
-      const gallery = formData.gallery.split(',').map(url => url.trim()).filter(url => url)
+      const tags = formData.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag)
+      const gallery = formData.gallery.split(',').map((url: string) => url.trim()).filter((url: string) => url)
       
       const url = isEditing ? `/api/projects/${project?.id}` : '/api/projects'
       const method = isEditing ? 'PUT' : 'POST'
